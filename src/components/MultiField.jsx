@@ -1,23 +1,19 @@
-import {useState} from 'react'
+import React,{useState} from 'react'
 
 function MultiField({status, fieldName, children}) {
 
-    const enhancedChildren = React.Children.map(children, child => {
-        // Check if the child is a React element to avoid errors
-        if (React.isValidElement(child)) {
-            return React.cloneElement(child, {"status": status});
-        }
-        return child;
-    });
+    const enhancedChildren = React.Children.map(children, child => React.cloneElement(child, {"status": status}));
 
-    const [fields, setFields] = useState([{...enhancedChildren}]);
+    const [fields, setFields] = useState([[React.Children.map(enhancedChildren, child => React.cloneElement(child))]]);
 
     return (
         <div>
             {fields}
-            <button onClick={() => setNumberOfFields(fields.splice(fields.length, 0, enhancedChildren))}>Add</button>
-            <button onClick={() => setNumberOfFields(fields.splice(fields.length-1, 1))}>Remove</button>
+            <button onClick={() => setFields([...fields, [React.Children.map(enhancedChildren, child => React.cloneElement(child))]])}>Add</button>
+            <button onClick={() => {if(fields.length > 0) setFields(fields.slice(0, -1))}}>Remove</button>
         </div>
     )
 
 }
+
+export default MultiField;
