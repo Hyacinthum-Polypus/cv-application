@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import '../styles/MultiField.css'
 
 function MultiField({status, fieldName, children}) {
 
@@ -10,7 +11,7 @@ function MultiField({status, fieldName, children}) {
         <div>
             {fields.map((group, index) => {
                 return(
-                    <div key={index} className="fieldGroup">
+                    <div key={index} className="field-group">
                         {group}
                     </div>
                 )
